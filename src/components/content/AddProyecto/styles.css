@@ -1,6 +1,15 @@
-#modal{
-
-    max-width: 900px !important;
-    width:900px !important;
-    background-color: green !important;
+.MuiDialog-paperWidthSm {
+    max-width: 80% !important;
+}
+.MuiInputBase-input{
+    width: 100% !important;
+}
+.helo{
+    padding-bottom: 10px;
+}
+.plus-btn{
+    padding-top: 20px !important;
+}
+.box-mar{
+    margin-top: -9px !important;
 }

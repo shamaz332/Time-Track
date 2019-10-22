@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Image, Button, Input } from 'semantic-ui-react'
+
+import './styles.css'
 class CarddTwo extends Component {
   render() {
     let cardTwo = null;
@@ -7,7 +9,7 @@ class CarddTwo extends Component {
       console.log(this.props.data)
       cardTwo = this.props.data.map(data => {
         return (
-          <div key={data.id}>
+          <div key={data.id} className='helo'>
             <Card>
               <Card.Content>
                 <Button floated='left' icon='close' size='mini' onClick={this.props.handleDelete.bind(this, data.id)}>

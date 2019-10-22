@@ -1,44 +1,107 @@
 import React from 'react';
-
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
 import PopupModel from './popgrid'
-import { Icon, Button } from 'semantic-ui-react'
-import { Modal } from "flwww";
+import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import './styles.css'
-// include styles
-
-class Popup extends React.Component {
-
-    state = {
-        modalIsVisible: false  // This control if the modal is visible or not
-    }
-
-    toggleModal = () => {
-        // This function change the state of the modal visibility (e.g. this.state.modalIsVisible)
-        this.setState(prevState => ({ modalIsVisible: !prevState.modalIsVisible }));
-    }
-
-    render() {
-        const { modalIsVisible } = this.state;
-        return (
-            <div style={{paddingTop:'30px'}}>
-                <Button onClick={this.toggleModal} circular ><Icon name='plus' size='big' style={{paddingLeft:'10px'}} /></Button>
 
 
-                <Modal 
-                
-                    isVisible={modalIsVisible}
-                    toggleModal={this.toggleModal}
-                    title="Nuevo Proyecto">
-                    <style>{'#modal { background-color: red; }'}</style>
-                    <PopupModel />
-                    <div style={{paddingTop:'5%',paddingBottom:'5%'}}>
-                    <Button class="ui teal button" floated='right' >guarder</Button>
-                    <Button class="ui red button" floated='right' onClick={this.toggleModal}>cancelar</Button>
-                    </div>
-                </Modal>
+const styles = theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
 
-            </div>
-        )
-    }
+  dialog: {
+    width: '80%',
+    maxHeight: '80%'
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+
+});
+
+
+const DialogTitle = withStyles(styles)(props => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles(theme => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiDialogContent);
+
+const DialogActions = withStyles(theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+  },
+}))(MuiDialogActions);
+
+export default function CustomizedDialogs() {
+
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  return (
+    <div className='plus-btn'>
+
+      <Button variant="contained" href="#contained-buttons" className={styles.button} onClick={handleClickOpen} >
+
+        <AddCircleOutlineRoundedIcon />
+
+      </Button>
+
+      <Dialog className={styles.dialog} onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} >
+
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          proyecto
+        </DialogTitle>
+        <DialogContent dividers>
+          <PopupModel />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Guarder
+        </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }
-export default Popup;
